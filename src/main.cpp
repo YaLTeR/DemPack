@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstdio>
 #include <boost/nowide/args.hpp>
 #include <boost/nowide/iostream.hpp>
 
@@ -69,32 +70,28 @@ int main(int argc, char *argv[])
 						break;
 
 					case PACK:
-						if (nowide::cin.eof()) {
+						if (std::fread(&f->DemoInfo.UserCmd.align_1, sizeof(f->DemoInfo.UserCmd.align_1), 1, stdin) == 0) {
 							done = true;
 							break;
 						}
-						nowide::cin >> f->DemoInfo.UserCmd.align_1;
 						byte_count++;
 
-						if (nowide::cin.eof()) {
+						if (std::fread(&f->DemoInfo.UserCmd.align_2, sizeof(f->DemoInfo.UserCmd.align_2), 1, stdin) == 0) {
 							done = true;
 							break;
 						}
-						nowide::cin >> f->DemoInfo.UserCmd.align_2;
 						byte_count++;
 
-						if (nowide::cin.eof()) {
+						if (std::fread(&f->DemoInfo.UserCmd.align_3, sizeof(f->DemoInfo.UserCmd.align_3), 1, stdin) == 0) {
 							done = true;
 							break;
 						}
-						nowide::cin >> f->DemoInfo.UserCmd.align_3;
 						byte_count++;
 
-						if (nowide::cin.eof()) {
+						if (std::fread(&f->DemoInfo.UserCmd.align_4, sizeof(f->DemoInfo.UserCmd.align_4), 1, stdin) == 0) {
 							done = true;
 							break;
 						}
-						nowide::cin >> f->DemoInfo.UserCmd.align_4;
 						byte_count++;
 
 						break;
@@ -116,10 +113,9 @@ int main(int argc, char *argv[])
 
 		if (op == PACK)
 			demo.Save(argv[3]);
-		else if (op == UNPACK)
-			nowide::cout << std::endl;
 
-		nowide::cout << byte_count << std::endl;
+		if (op != UNPACK)
+			nowide::cout << byte_count << std::endl;
 	} catch (const std::exception& ex) {
 		nowide::cerr << "Error: " << ex.what() << std::endl;
 	}
