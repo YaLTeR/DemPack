@@ -3,7 +3,7 @@ DemPack
 
 This is a tool for reading and writing arbitrary data stored in GoldSource demo files.
 It utilizes unused bytes in the demo files for data storage.
-The resulting demo files are of exactly the same length as the original ones and behave exactly like the original ones.
+The resulting demo files are of exactly the same size as the original ones and behave exactly like the original ones.
 
 #Usage
 - `DemPack <path to .dem>`: prints the number of bytes you can pack into the given demo.
