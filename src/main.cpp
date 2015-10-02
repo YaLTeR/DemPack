@@ -3,20 +3,25 @@
 #include <boost/nowide/args.hpp>
 #include <boost/nowide/iostream.hpp>
 
-#include "DemoFile.h"
+#include "DemoFile.hpp"
 
 using namespace boost;
+
+void usage()
+{
+	nowide::cerr << "Usage:"
+                    "\n\tDemPack <path to demo.dem>"
+                    "\n\tDemPack <path to demo.dem> -u"
+                    "\n\tDemPack <path to demo.dem> -p <path to output.dem>"
+                 << std::endl;
+}
 
 int main(int argc, char *argv[])
 {
 	nowide::args a(argc, argv);
 
 	if (argc != 2 && argc != 3 && argc != 4) {
-		nowide::cerr << "Usage:"
-		                "\n\tDemPack.exe <path to demo.dem>"
-		                "\n\tDemPack.exe <path to demo.dem> -u"
-		                "\n\tDemPack.exe <path to demo.dem> -p <path to output.dem>"
-		                << std::endl;
+		usage();
 		return 1;
 	}
 
@@ -28,11 +33,7 @@ int main(int argc, char *argv[])
 
 	if (argc == 3) {
 		if (argv[2][0] != '-' || argv[2][1] != 'u' || argv[2][2] != '\0') {
-			nowide::cerr << "Usage:"
-		                "\n\tDemPack.exe <path to demo.dem>"
-		                "\n\tDemPack.exe <path to demo.dem> -u"
-		                "\n\tDemPack.exe <path to demo.dem> -p <path to output.dem>"
-		                << std::endl;
+			usage();
 			return 1;
 		}
 
@@ -41,11 +42,7 @@ int main(int argc, char *argv[])
 
 	if (argc == 4) {
 		if (argv[2][0] != '-' || argv[2][1] != 'p' || argv[2][2] != '\0') {
-			nowide::cerr << "Usage:"
-		                "\n\tDemPack.exe <path to demo.dem>"
-		                "\n\tDemPack.exe <path to demo.dem> -u"
-		                "\n\tDemPack.exe <path to demo.dem> -p <path to output.dem>"
-		                << std::endl;
+			usage();
 			return 1;
 		}
 
@@ -59,7 +56,7 @@ int main(int argc, char *argv[])
 		size_t byte_count = 0;
 		bool done = false;
 
-		for (auto& entry : demo.GetDirectoryEntries()) {
+		for (auto& entry : demo.directoryEntries) {
 			for (auto& frame : entry.frames) {
 				// If it's a netmsg frame:
 				if (frame->type < DemoFrameType::DEMO_START || frame->type > DemoFrameType::DEMO_BUFFER) {
